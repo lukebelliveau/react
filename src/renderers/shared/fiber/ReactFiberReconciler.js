@@ -200,7 +200,9 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
         callback,
       );
     }
+    console.log('ReactFiberReconciler.scheduleTopLevelUpdate calls ReactFiberUpdateQueue.addTopLevelUpdate');
     addTopLevelUpdate(current, nextState, callback, priorityLevel);
+    console.log('ReactFiberReconciler.scheduleTopLevelUpdate calls ReactFiberScheduler.scheduleUpdate');
     scheduleUpdate(current, priorityLevel);
   }
 
@@ -261,6 +263,7 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
     },
 
     findHostInstance(fiber: Fiber): I | TI | null {
+        console.log('ReactFiberReconciler.findHostInstance')
       const hostFiber = findCurrentHostFiber(fiber);
       if (hostFiber === null) {
         return null;

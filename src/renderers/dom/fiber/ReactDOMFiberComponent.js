@@ -307,6 +307,9 @@ var ReactDOMFiberComponent = {
     rootContainerElement: Element,
     parentNamespace: string,
   ): Element {
+    // console.log('**********************************');
+    // console.log('ReactDOMFiberComponent.createElement');
+    // console.log('**********************************');
     // We create tags in the namespace of their parent container, except HTML
     // tags get no namespace.
     var ownerDocument = rootContainerElement.ownerDocument;

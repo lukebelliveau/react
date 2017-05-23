@@ -181,6 +181,18 @@ var ReactElement = function(type, key, ref, self, source, owner, props) {
  * See https://facebook.github.io/react/docs/react-api.html#createelement
  */
 ReactElement.createElement = function(type, config, children) {
+  // console.log('**********************************');
+  // console.log('ReactElement.createElement()***');
+  // console.log('**********************************');
+  //   console.log('type: ');
+  //   if (typeof type === 'string') {
+  //     console.log(type);
+  //   } else {
+  //     console.log(type.toString());
+  //   }
+  //   console.log('config: '); console.log(config);
+  //   console.log('children: '); console.log(children);
+
   var propName;
 
   // Reserved names are extracted
@@ -257,7 +269,7 @@ ReactElement.createElement = function(type, config, children) {
       }
     }
   }
-  return ReactElement(
+  const element = ReactElement(
     type,
     key,
     ref,
@@ -266,6 +278,9 @@ ReactElement.createElement = function(type, config, children) {
     ReactCurrentOwner.current,
     props,
   );
+  // console.log('**ELEMENT TO RETURN:');
+  // console.log(element);
+  return element;
 };
 
 /**

@@ -157,6 +157,13 @@ var ReactDOMEventListener = {
     if (!element) {
       return null;
     }
+    console.log('ReactDOMEventListener.trapCapturedEvent');
+    console.log('topLevelType:');
+    console.log(topLevelType);
+    console.log('handlerBaseName:');
+    console.log(handlerBaseName);
+    console.log('element:');
+    console.log(element);
     return EventListener.capture(
       element,
       handlerBaseName,

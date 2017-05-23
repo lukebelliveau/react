@@ -73,6 +73,7 @@ module.exports = function(
         warnOnInvalidCallback(callback, 'setState');
       }
       addUpdate(fiber, partialState, callback, priorityLevel);
+      console.log('ReactFiberClassComponent.enqueueSetState.scheduleUpdate');
       scheduleUpdate(fiber, priorityLevel);
     },
     enqueueReplaceState(instance, state, callback) {
@@ -83,6 +84,7 @@ module.exports = function(
         warnOnInvalidCallback(callback, 'replaceState');
       }
       addReplaceUpdate(fiber, state, callback, priorityLevel);
+      console.log('ReactFiberClassComponent.enqueueReplaceState.scheduleUpdate');
       scheduleUpdate(fiber, priorityLevel);
     },
     enqueueForceUpdate(instance, callback) {
@@ -93,6 +95,7 @@ module.exports = function(
         warnOnInvalidCallback(callback, 'forceUpdate');
       }
       addForceUpdate(fiber, callback, priorityLevel);
+      console.log('ReactFiberClassComponent.enqueueForceUpdate.scheduleUpdate');
       scheduleUpdate(fiber, priorityLevel);
     },
   };
@@ -279,6 +282,8 @@ module.exports = function(
   }
 
   function adoptClassInstance(workInProgress: Fiber, instance: any): void {
+    console.log('ReactFiberClassComponent.adoptClassInstance sets instance.updater with workInProgress fiber: ');
+    console.log(workInProgress);
     instance.updater = updater;
     workInProgress.stateNode = instance;
     // The instance needs access to the fiber so that it can schedule updates
@@ -305,6 +310,11 @@ module.exports = function(
   }
 
   function callComponentWillMount(workInProgress, instance) {
+    console.log('***ReactFiberClassComponent.callComponentWillMount()');
+    console.log('workInProgress');
+    console.log(workInProgress);
+    console.log('instance');
+    console.log(instance);
     if (__DEV__) {
       startPhaseTimer(workInProgress, 'componentWillMount');
     }
@@ -324,6 +334,7 @@ module.exports = function(
           getComponentName(workInProgress),
         );
       }
+      console.log('ReactFiberClassComponent.callComponentWillMount calls updater.enqueueReplaceState');
       updater.enqueueReplaceState(instance, instance.state, null);
     }
   }
@@ -353,6 +364,7 @@ module.exports = function(
           getComponentName(workInProgress),
         );
       }
+      console.log('ReactFiberClassComponent.callComponentWillReceiveProps calls updater.enqueueReplaceState');
       updater.enqueueReplaceState(instance, instance.state, null);
     }
   }

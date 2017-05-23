@@ -1263,6 +1263,9 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
   }
 
   function scheduleUpdate(fiber: Fiber, priorityLevel: PriorityLevel) {
+    console.log('***ReactFiberScheduler.scheduleUpdate***');
+    console.log('fiber: ');
+    console.log(fiber);
     if (__DEV__) {
       recordScheduleUpdate();
     }
@@ -1371,6 +1374,7 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
   }
 
   function scheduleErrorRecovery(fiber: Fiber) {
+    console.log('ReactFiberScheduler.scheduleErrorRecovery');
     scheduleUpdate(fiber, TaskPriority);
   }
 

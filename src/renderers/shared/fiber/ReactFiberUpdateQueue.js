@@ -363,6 +363,8 @@ function addTopLevelUpdate(
   callback: Callback | null,
   priorityLevel: PriorityLevel,
 ): void {
+    console.log('***ReactFiberUpdateQueue.addTopLevelUpdate***');
+    console.log(fiber);
   const isTopLevelUnmount = partialState.element === null;
 
   const update = {

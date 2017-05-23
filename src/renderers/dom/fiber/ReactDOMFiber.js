@@ -187,6 +187,9 @@ var DOMRenderer = ReactFiberReconciler({
     hostContext: HostContext,
     internalInstanceHandle: Object,
   ): Instance {
+    // console.log('**********************************');
+    // console.log('***ReactDOMFiber.createInstance***');
+    // console.log('**********************************');
     let parentNamespace: string;
     if (__DEV__) {
       // TODO: take namespace into account when validating.

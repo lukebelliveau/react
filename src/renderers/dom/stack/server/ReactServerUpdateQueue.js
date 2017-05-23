@@ -137,6 +137,7 @@ class ReactServerUpdateQueue {
     callerName?: string,
   ) {
     if (this.transaction.isInTransaction()) {
+      console.log('ReactServerUpdateQueue calls ReactUpdateQueue.enqueueSetState');
       ReactUpdateQueue.enqueueSetState(
         publicInstance,
         partialState,

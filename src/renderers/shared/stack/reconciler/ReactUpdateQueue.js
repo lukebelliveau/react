@@ -30,6 +30,7 @@ if (__DEV__) {
 }
 
 function enqueueUpdate(internalInstance) {
+  console.log('ReactUpdateQueue.enqueueUpdate');
   ReactUpdates.enqueueUpdate(internalInstance);
 }
 
@@ -211,6 +212,7 @@ var ReactUpdateQueue = {
     callback,
     callerName,
   ) {
+    console.log('ReactUpdateQueue.enqueueSetState');
     if (__DEV__) {
       ReactInstrumentation.debugTool.onSetState();
       warning(
