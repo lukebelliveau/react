@@ -135,8 +135,7 @@ var ReactBrowserEventEmitter = Object.assign({}, ReactEventEmitterMixin, {
    * @param {object} contentDocumentHandle Document which owns the container
    */
   listenTo: function(registrationName, contentDocumentHandle) {
-    Tracer();
-    console.log('***ReactBrowserEventEmitter.listenTo***');
+    Tracer.ReactBrowserEventEmitter.listenTo();
     var mountAt = contentDocumentHandle;
     var isListening = getListeningForDocument(mountAt);
     var dependencies =

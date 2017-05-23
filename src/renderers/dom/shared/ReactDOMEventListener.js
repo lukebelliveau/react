@@ -20,7 +20,10 @@ var ReactTypeOfWork = require('ReactTypeOfWork');
 var getEventTarget = require('getEventTarget');
 var getUnboundedScrollPosition = require('fbjs/lib/getUnboundedScrollPosition');
 
+var Tracer = require('Tracer');
+
 var {HostRoot} = ReactTypeOfWork;
+
 
 /**
  * Find the deepest React component completely containing the root of the
@@ -157,13 +160,7 @@ var ReactDOMEventListener = {
     if (!element) {
       return null;
     }
-    console.log('ReactDOMEventListener.trapCapturedEvent');
-    console.log('topLevelType:');
-    console.log(topLevelType);
-    console.log('handlerBaseName:');
-    console.log(handlerBaseName);
-    console.log('element:');
-    console.log(element);
+    Tracer.ReactDOMEventListener.trapCapturedEvent();
     return EventListener.capture(
       element,
       handlerBaseName,

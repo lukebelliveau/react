@@ -87,6 +87,8 @@ var {resetContext} = require('ReactFiberContext');
 
 var invariant = require('fbjs/lib/invariant');
 
+const Tracer = require('Tracer');
+
 if (__DEV__) {
   var warning = require('fbjs/lib/warning');
   var ReactFiberInstrumentation = require('ReactFiberInstrumentation');
@@ -1263,9 +1265,10 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
   }
 
   function scheduleUpdate(fiber: Fiber, priorityLevel: PriorityLevel) {
-    console.log('***ReactFiberScheduler.scheduleUpdate***');
-    console.log('fiber: ');
-    console.log(fiber);
+    Tracer.ReactFiberScheduler.scheduleUpdate(() => {
+      console.log('fiber: ');
+      console.log(fiber);
+    });
     if (__DEV__) {
       recordScheduleUpdate();
     }

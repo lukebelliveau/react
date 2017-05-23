@@ -15,6 +15,7 @@
 import type {Fiber} from 'ReactFiber';
 import type {PriorityLevel} from 'ReactPriorityLevel';
 
+const Tracer = require('Tracer');
 const {Callback: CallbackEffect} = require('ReactTypeOfSideEffect');
 
 const {
@@ -363,8 +364,7 @@ function addTopLevelUpdate(
   callback: Callback | null,
   priorityLevel: PriorityLevel,
 ): void {
-    console.log('***ReactFiberUpdateQueue.addTopLevelUpdate***');
-    console.log(fiber);
+  Tracer.ReactFiberUpdateQueue.addTopLevelUpdate();
   const isTopLevelUnmount = partialState.element === null;
 
   const update = {
