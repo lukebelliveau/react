@@ -50,6 +50,8 @@ var {
 } = ReactDOMFiberComponent;
 var {precacheFiberNode, updateFiberProps} = ReactDOMComponentTree;
 
+var Trace = require('Trace');
+
 if (__DEV__) {
   var validateDOMNesting = require('validateDOMNesting');
   var {updatedAncestorInfo} = validateDOMNesting;
@@ -99,6 +101,7 @@ function isValidContainer(node) {
 }
 
 function validateContainer(container) {
+  Trace('ReactDOMFiber', 'validateContainer');
   if (!isValidContainer(container)) {
     throw new Error('Target container is not a DOM element.');
   }
@@ -392,12 +395,28 @@ function renderSubtreeIntoContainer(
   containerNode: DOMContainerElement | Document,
   callback: ?Function,
 ) {
+  Trace('ReactDOMFiber', 'renderSubtreeIntoContainer', () => {
+    console.log('CALLED');
+    console.log('parentComponent:');
+    console.log(parentComponent);
+    console.log('children:');
+    console.log(children);
+    console.log('containerNode:');
+    console.log(containerNode);
+    console.log('container node type:');
+    console.log(containerNode.nodeType);
+    console.log('callback:');
+    console.log(callback);
+  });
   validateContainer(containerNode);
 
   let container: DOMContainerElement = containerNode.nodeType === DOCUMENT_NODE
     ? (containerNode: any).documentElement
     : (containerNode: any);
   let root = container._reactRootContainer;
+
+  let rootBeforeIf = root;
+
   if (!root) {
     // First clear any existing content.
     while (container.lastChild) {
@@ -412,7 +431,37 @@ function renderSubtreeIntoContainer(
   } else {
     DOMRenderer.updateContainer(children, root, parentComponent, callback);
   }
-  return DOMRenderer.getPublicRootInstance(root);
+
+  let publicRootInstance = DOMRenderer.getPublicRootInstance(root);
+
+  Trace('ReactDOMFiber', 'renderSubtreeIntoContainer', () => {
+    console.log('RETURNING');
+    console.log('parentComponent:');
+    console.log(parentComponent);
+    console.log('children:');
+    console.log(children);
+    console.log('containerNode:');
+    console.log(containerNode);
+    console.log('callback:');
+    console.log(callback);
+
+    console.log('');
+    console.log('container:');
+    console.log(container);
+    console.log('');
+
+    console.log('rootBeforeIf:');
+    console.log(rootBeforeIf);
+    console.log('rootAfterIf:');
+    console.log(root);
+
+    console.log('');
+    console.log('publicRootInstance:');
+    console.log(publicRootInstance);
+    console.log('');
+  });
+
+  return null;
 }
 
 var ReactDOM = {
@@ -421,6 +470,14 @@ var ReactDOM = {
     container: DOMContainerElement,
     callback: ?Function,
   ) {
+    Trace('ReactDOMFiber', 'render', () => {
+      console.log('element:');
+      console.log(element);
+      console.log('container:');
+      console.log(container);
+      console.log('callback:');
+      console.log(callback);
+    });
     validateContainer(container);
 
     if (ReactFeatureFlags.disableNewFiberFeatures) {
@@ -493,12 +550,13 @@ var ReactDOM = {
       parentComponent != null && ReactInstanceMap.has(parentComponent),
       'parentComponent must be a valid React Component',
     );
-    return renderSubtreeIntoContainer(
-      parentComponent,
-      element,
-      containerNode,
-      callback,
-    );
+    return null;
+    // return renderSubtreeIntoContainer(
+    //   parentComponent,
+    //   element,
+    //   containerNode,
+    //   callback,
+    // );
   },
 
   unmountComponentAtNode(container: DOMContainerElement) {

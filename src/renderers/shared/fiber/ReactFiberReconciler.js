@@ -40,7 +40,7 @@ var {findCurrentHostFiber} = require('ReactFiberTreeReflection');
 
 var getContextForSubtree = require('getContextForSubtree');
 
-var Tracer = require('Tracer');
+var Trace = require('Trace');
 
 export type Deadline = {
   timeRemaining: () => number,
@@ -202,7 +202,19 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
         callback,
       );
     }
-    Tracer.ReactFiberReconciler.scheduleTopLevelUpdate();
+    Trace('ReactFiberReconciler', 'scheduleTopLevelUpdate', () => {
+      console.log('element:');
+      console.log(element);
+      console.log('current:');
+      console.log(current);
+      console.log('callback:');
+      console.log(callback);
+
+      console.log('priorityLevel:');
+      console.log(priorityLevel);
+      console.log('nextState:');
+      console.log(nextState);
+    });
     addTopLevelUpdate(current, nextState, callback, priorityLevel);
     scheduleUpdate(current, priorityLevel);
   }
@@ -219,6 +231,17 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
       callback: ?Function,
     ): void {
       // TODO: If this is a nested container, this won't be the root.
+      Trace('ReactFiberReconciler', 'updateContainer', () => {
+        console.log('CALLED');
+        console.log('element:');
+        console.log(element);
+        console.log('container:');
+        console.log(container);
+        console.log('parentComponent:');
+        console.log(parentComponent);
+        console.log('callback:');
+        // console.log(callback);
+      });
       const current = container.current;
 
       if (__DEV__) {
@@ -235,10 +258,19 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
 
       const context = getContextForSubtree(parentComponent);
       if (container.context === null) {
+        console.log('container.context NULL!');
+        console.log(container.context);
         container.context = context;
       } else {
+        console.log('container.context NOT null!');
         container.pendingContext = context;
       }
+
+      Trace('ReactFiberReconciler', 'updateContainer', () => {
+        console.log('CALLING scheduleTopLevelUpdate');
+        console.log('container:');
+        console.log(container);
+      });
 
       scheduleTopLevelUpdate(current, element, callback);
     },
@@ -264,7 +296,7 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
     },
 
     findHostInstance(fiber: Fiber): I | TI | null {
-      Tracer.ReactFiberReconciler.findHostInstance();
+      Trace('ReactFiberReconciler', 'findHostInstance');
       const hostFiber = findCurrentHostFiber(fiber);
       if (hostFiber === null) {
         return null;

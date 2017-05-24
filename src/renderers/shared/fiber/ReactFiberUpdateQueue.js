@@ -15,7 +15,7 @@
 import type {Fiber} from 'ReactFiber';
 import type {PriorityLevel} from 'ReactPriorityLevel';
 
-const Tracer = require('Tracer');
+const Trace = require('Trace');
 const {Callback: CallbackEffect} = require('ReactTypeOfSideEffect');
 
 const {
@@ -364,7 +364,6 @@ function addTopLevelUpdate(
   callback: Callback | null,
   priorityLevel: PriorityLevel,
 ): void {
-  Tracer.ReactFiberUpdateQueue.addTopLevelUpdate();
   const isTopLevelUnmount = partialState.element === null;
 
   const update = {
@@ -377,6 +376,21 @@ function addTopLevelUpdate(
     next: null,
   };
   const update2 = insertUpdate(fiber, update);
+
+  Trace('ReactFiberUpdateQueue', 'addTopLevelUpdate', () => {
+    console.log('CALLED')
+    console.log('fiber:');
+    console.log(fiber);
+    console.log('partialState:');
+    console.log(partialState);
+    console.log('callback:');
+    console.log(callback);
+    console.log('priorityLevel:');
+    console.log(priorityLevel);
+
+    console.log('isTopLevelUnmount:');
+    console.log(isTopLevelUnmount);
+  });
 
   if (isTopLevelUnmount) {
     // Drop all updates that are lower-priority, so that the tree is not

@@ -20,7 +20,7 @@ var ReactTypeOfWork = require('ReactTypeOfWork');
 var getEventTarget = require('getEventTarget');
 var getUnboundedScrollPosition = require('fbjs/lib/getUnboundedScrollPosition');
 
-var Tracer = require('Tracer');
+var Trace = require('Trace');
 
 var {HostRoot} = ReactTypeOfWork;
 
@@ -160,7 +160,7 @@ var ReactDOMEventListener = {
     if (!element) {
       return null;
     }
-    Tracer.ReactDOMEventListener.trapCapturedEvent();
+    Trace('ReactDOMEventListener', 'trapCapturedEvent');
     return EventListener.capture(
       element,
       handlerBaseName,

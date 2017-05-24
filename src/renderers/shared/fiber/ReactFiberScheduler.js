@@ -87,7 +87,7 @@ var {resetContext} = require('ReactFiberContext');
 
 var invariant = require('fbjs/lib/invariant');
 
-const Tracer = require('Tracer');
+const Trace = require('Trace');
 
 if (__DEV__) {
   var warning = require('fbjs/lib/warning');
@@ -863,6 +863,12 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
     priorityLevel: PriorityLevel,
     deadline: Deadline | null,
   ) {
+    Trace('ReactFiberScheduler', 'performWork', () => {
+      console.log('priorityLevel:');
+      console.log(priorityLevel);
+      console.log('deadline:');
+      console.log(deadline);
+    });
     if (__DEV__) {
       startWorkLoopTimer();
     }
@@ -1246,6 +1252,18 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
   }
 
   function scheduleRoot(root: FiberRoot, priorityLevel: PriorityLevel) {
+    Trace('ReactFiberScheduler', 'scheduleRoot', () => {
+      console.log('root:');
+      console.log(root);
+      console.log('priorityLevel:');
+      console.log(priorityLevel);
+
+      console.log('');
+      console.log('lastScheduledRoot:');
+      console.log(lastScheduledRoot);
+      console.log('nextScheduledRoot:');
+      console.log(nextScheduledRoot);
+    });
     if (priorityLevel === NoWork) {
       return;
     }
@@ -1265,9 +1283,16 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
   }
 
   function scheduleUpdate(fiber: Fiber, priorityLevel: PriorityLevel) {
-    Tracer.ReactFiberScheduler.scheduleUpdate(() => {
+    Trace('ReactFiberScheduler', 'scheduleUpdate', () => {
+      console.log('CALLED');
       console.log('fiber: ');
       console.log(fiber);
+      console.log('priorityLevel:');
+      console.log(priorityLevel);
+
+      console.log('');
+      console.log('nextUnitOfWork:');
+      console.log(nextUnitOfWork);
     });
     if (__DEV__) {
       recordScheduleUpdate();
@@ -1290,6 +1315,10 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
     let node = fiber;
     let shouldContinue = true;
     while (node !== null && shouldContinue) {
+      Trace('ReactFiberScheduler', 'scheduleUpdate', () => {
+        console.log('in WHILE loop, with node:');
+        console.log(node);
+      });
       // Walk the parent path to the root and update each node's priority. Once
       // we reach a node whose priority matches (and whose alternate's priority
       // matches) we can exit safely knowing that the rest of the path is correct.

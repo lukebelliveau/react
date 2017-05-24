@@ -40,6 +40,8 @@ var getComponentName = require('getComponentName');
 var shallowEqual = require('fbjs/lib/shallowEqual');
 var invariant = require('fbjs/lib/invariant');
 
+var Trace = require('Trace');
+
 const isArray = Array.isArray;
 
 if (__DEV__) {
@@ -310,11 +312,13 @@ module.exports = function(
   }
 
   function callComponentWillMount(workInProgress, instance) {
-    console.log('***ReactFiberClassComponent.callComponentWillMount()');
-    console.log('workInProgress');
-    console.log(workInProgress);
-    console.log('instance');
-    console.log(instance);
+    Trace('ReactFiberClassComponent', 'callComponentWillMount', () => {
+      console.log('workInProgress');
+      console.log(workInProgress);
+      console.log('instance');
+      console.log(instance);
+    });
+
     if (__DEV__) {
       startPhaseTimer(workInProgress, 'componentWillMount');
     }
@@ -334,7 +338,6 @@ module.exports = function(
           getComponentName(workInProgress),
         );
       }
-      console.log('ReactFiberClassComponent.callComponentWillMount calls updater.enqueueReplaceState');
       updater.enqueueReplaceState(instance, instance.state, null);
     }
   }
@@ -364,7 +367,7 @@ module.exports = function(
           getComponentName(workInProgress),
         );
       }
-      console.log('ReactFiberClassComponent.callComponentWillReceiveProps calls updater.enqueueReplaceState');
+      Trace('ReactFiberClassComponent', 'callComponentWillReceiveProps');
       updater.enqueueReplaceState(instance, instance.state, null);
     }
   }

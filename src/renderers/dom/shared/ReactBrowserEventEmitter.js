@@ -18,7 +18,7 @@ var ReactEventEmitterMixin = require('ReactEventEmitterMixin');
 var isEventSupported = require('isEventSupported');
 var {topLevelTypes} = require('BrowserEventConstants');
 
-var Tracer = require('Tracer');
+var Trace = require('Trace');
 
 /**
  * Summary of `ReactBrowserEventEmitter` event handling:
@@ -135,7 +135,7 @@ var ReactBrowserEventEmitter = Object.assign({}, ReactEventEmitterMixin, {
    * @param {object} contentDocumentHandle Document which owns the container
    */
   listenTo: function(registrationName, contentDocumentHandle) {
-    Tracer.ReactBrowserEventEmitter.listenTo();
+    Trace('ReactBrowserEventEmitter', 'listenTo');
     var mountAt = contentDocumentHandle;
     var isListening = getListeningForDocument(mountAt);
     var dependencies =
