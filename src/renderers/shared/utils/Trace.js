@@ -9,19 +9,19 @@
  * @providesModule Trace
  */
 
-var warning = require('fbjs/lib/warning');
-
 const toggles = {
   ReactBrowserEventEmitter: {
     listenTo: true,
   },
   ReactFiberReconciler: {
-    scheduleTopLevelUpdate: true,
+    scheduleTopLevelUpdate: false,
     findHostInstance: true,
     updateContainer: true,
   },
   ReactFiberUpdateQueue: {
     addTopLevelUpdate: true,
+    insertUpdate: true,
+    insertUpdateIntoQueue: true,
   },
   ReactFiberScheduler: {
     scheduleUpdate: true,

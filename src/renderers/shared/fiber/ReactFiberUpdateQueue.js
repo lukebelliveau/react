@@ -163,6 +163,7 @@ function insertUpdateIntoQueue(
   insertAfter: Update | null,
   insertBefore: Update | null,
 ) {
+  Trace('ReactFiberUpdateQueue', 'insertUpdateIntoQueue');
   if (insertAfter !== null) {
     insertAfter.next = update;
   } else {
@@ -235,6 +236,12 @@ function findInsertionPosition(queue, update): Update | null {
 //
 // If the update is cloned, it returns the cloned update.
 function insertUpdate(fiber: Fiber, update: Update): Update | null {
+  Trace('ReactFiberUpdateQueue', 'insertUpdate', () => {
+    console.log('fiber');
+    console.log(fiber);
+    console.log('update:');
+    console.log(update);
+  });
   const queue1 = ensureUpdateQueue(fiber);
   const queue2 = fiber.alternate !== null
     ? ensureUpdateQueue(fiber.alternate)
@@ -255,6 +262,8 @@ function insertUpdate(fiber: Fiber, update: Update): Update | null {
 
   // Find the insertion position in the first queue.
   const insertAfter1 = findInsertionPosition(queue1, update);
+  console.log('insertAfter1:');
+  console.log(insertAfter1);
   const insertBefore1 = insertAfter1 !== null
     ? insertAfter1.next
     : queue1.first;
@@ -375,10 +384,8 @@ function addTopLevelUpdate(
     isTopLevelUnmount,
     next: null,
   };
-  const update2 = insertUpdate(fiber, update);
-
   Trace('ReactFiberUpdateQueue', 'addTopLevelUpdate', () => {
-    console.log('CALLED')
+    console.log('CALLED');
     console.log('fiber:');
     console.log(fiber);
     console.log('partialState:');
@@ -391,6 +398,7 @@ function addTopLevelUpdate(
     console.log('isTopLevelUnmount:');
     console.log(isTopLevelUnmount);
   });
+  const update2 = insertUpdate(fiber, update);
 
   if (isTopLevelUnmount) {
     // Drop all updates that are lower-priority, so that the tree is not

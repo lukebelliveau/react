@@ -194,6 +194,7 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
     const priorityLevel = getPriorityContext(current, forceAsync);
     const nextState = {element};
     callback = callback === undefined ? null : callback;
+
     if (__DEV__) {
       warning(
         callback === null || typeof callback === 'function',
@@ -203,10 +204,10 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
       );
     }
     Trace('ReactFiberReconciler', 'scheduleTopLevelUpdate', () => {
-      console.log('element:');
-      console.log(element);
       console.log('current:');
       console.log(current);
+      console.log('element:');
+      console.log(element);
       console.log('callback:');
       console.log(callback);
 
@@ -215,6 +216,7 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
       console.log('nextState:');
       console.log(nextState);
     });
+
     addTopLevelUpdate(current, nextState, callback, priorityLevel);
     scheduleUpdate(current, priorityLevel);
   }
@@ -258,11 +260,8 @@ module.exports = function<T, P, I, TI, PI, C, CX, PL>(
 
       const context = getContextForSubtree(parentComponent);
       if (container.context === null) {
-        console.log('container.context NULL!');
-        console.log(container.context);
         container.context = context;
       } else {
-        console.log('container.context NOT null!');
         container.pendingContext = context;
       }
 
